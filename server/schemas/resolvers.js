@@ -5,15 +5,29 @@ const { signToken } = require("../utils/auth");
 /* RESOLVERS */
 const resolvers = {
   Query: {
-    user: async (parent, { _id }) => {
-      return User.findById(_id).populate("savedBooks");
+    user: async (parent, { _id }, context) => {
+      if (context.user) {
+        return User.findById(_id).populate("savedBooks");
+      }
     },
   },
   Mutation: {
-    createUser: async (parent, { username, email, password, savedBooks }) => {
-      console.log("In create user");
-      const user = await User.create({ username, email, password, savedBooks });
-      console.log("User", user);
+    createUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new Error("Can't find this user");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new Error("Wrong password!");
+      }
+
       const token = signToken(user);
       return { token, user };
     },
@@ -36,24 +50,6 @@ const resolvers = {
         );
         return user;
       }
-    },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({
-        $or: [{ username }, { email }],
-      });
-
-      if (!user) {
-        throw new Error("Can't find this user");
-      }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new Error("Wrong password!");
-      }
-
-      const token = signToken(user);
-      return { token, user };
     },
   },
 };
