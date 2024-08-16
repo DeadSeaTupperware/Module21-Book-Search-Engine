@@ -1,12 +1,14 @@
+/* DEPENDENCIES */
 import { gql } from "@apollo/client";
 
 /* QUERIES */
-export const QUERY_USER = gql`
+export const GET_ME = gql`
   {
-    user {
+    me {
       _id
       username
       email
+      bookCount
       savedBooks {
         bookId
         authors
