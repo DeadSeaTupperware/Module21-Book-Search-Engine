@@ -17,6 +17,7 @@ const SignupForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   // hook for mutation for creating new user (signing up)
+  // eslint-disable-next-line no-unused-vars
   const [addUser, { error }] = useMutation(ADD_USER);
 
   // handles updating of userFormData on user input
