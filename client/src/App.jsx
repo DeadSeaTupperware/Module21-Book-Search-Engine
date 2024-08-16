@@ -1,3 +1,5 @@
+/* DEPENDENCIES */
+import React from "react";
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import {
@@ -15,7 +17,6 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
-
   return {
     headers: {
       ...headers,
@@ -29,6 +30,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+/* APP */
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -38,4 +40,5 @@ function App() {
   );
 }
 
+/* EXPORT */
 export default App;
