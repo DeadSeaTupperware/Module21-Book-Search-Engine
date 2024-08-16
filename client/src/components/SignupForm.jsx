@@ -1,9 +1,11 @@
+/* DEPENDENCIES */
 import { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
+/* SIGNUP FORM */
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
@@ -38,9 +40,9 @@ const SignupForm = () => {
         data: { ...userFormData },
       });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+      // if (!response.ok) {
+      //   throw new Error("something went wrong!");
+      // }
 
       const { token, user } = await response.json();
       console.log(user);
@@ -133,4 +135,5 @@ const SignupForm = () => {
   );
 };
 
+/* EXPORT */
 export default SignupForm;
