@@ -1,45 +1,30 @@
 const typeDefs = `
-    type Book {
-        bookId: String!
-        title: String!
-        authors: [String]
+    type book {
+        _id: ID
+        authors: String
         description: String!
-        image: String
-        link: String
-    }
-
-    input BookInput {
         bookId: String!
-        title: String
-        authors: [String]
-        description: String
         image: String
         link: String
+        title: String!
     }
 
     type User {
-        _id: ID!
+        _id: ID
         username: String!
         email: String!
         password: String!
-        bookCount: Int
-        savedBooks: [Book]
-    }
-
-    type Auth {
-        token: String!
-        user: User
+        savedBooks: [Book]!
     }
 
     type Query {
-        me: User
+        user(_id: String): [User]
     }
 
     type Mutation {
-        addUser(username: String!, email: String!, password: String!): Auth
-        loginUser(email: String, password: String!): Auth
-        saveBook(bookInput: BookInput): User
-        removeBook(bookId: String!): User
+        createUser(username: String!, email: String!, password: String!, savedBooks: [Book]!): [User]
+        addBook(_id: String!): [User]
+        deleteBook(_id: String!): [User]
     }
 `;
 
