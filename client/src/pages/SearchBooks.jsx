@@ -15,6 +15,7 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   // hook for mutation for saving books
+  // eslint-disable-next-line no-unused-vars
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
   // hook for saving list of 'savedBookIds' to localStorage on component unmount
@@ -63,6 +64,7 @@ const SearchBooks = () => {
     }
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const { data } = await saveBook({
         variables: { bookInput: bookToSave },
       });

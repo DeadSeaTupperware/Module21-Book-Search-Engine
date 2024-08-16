@@ -13,6 +13,7 @@ const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   // hook for mutation for logging in
+  // eslint-disable-next-line no-unused-vars
   const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   // handles updating of userFormData on user input

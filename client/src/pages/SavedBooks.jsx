@@ -9,6 +9,7 @@ import Auth from "../utils/auth";
 /* SAVED BOOKS */
 const SavedBooks = () => {
   // hook for mutation for deleting book
+  // eslint-disable-next-line no-unused-vars
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   // hook for querying user data
@@ -28,6 +29,7 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
+      // eslint-disable-next-line no-unused-vars
       const user = data?.removeBook || {};
       removeBookId(bookId);
     } catch (err) {
