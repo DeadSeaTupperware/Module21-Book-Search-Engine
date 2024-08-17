@@ -15,7 +15,7 @@ const SavedBooks = () => {
   // hook for querying user data
   const { loading, data } = useQuery(GET_ME);
   let userData = data?.me || {};
-  console.log(data);
+  console.log(userData);
 
   // deletes book, accepts book's id value and calls removeBook mutation
   const handleDeleteBook = async (bookId) => {
