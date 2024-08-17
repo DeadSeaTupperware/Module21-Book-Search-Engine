@@ -14,17 +14,20 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
-  context: authMiddleware,
+  context: ({ req }) => authMiddleware({ req }), // Ensure authMiddleware is applied here
 });
 
 const startApolloServer = async () => {
   await server.start();
 
+  // Apply Express middleware first
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
+  // Apply Apollo GraphQL middleware after Express middleware
   app.use("/graphql", expressMiddleware(server));
 
+  // Serve static assets in production
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
 
@@ -33,6 +36,7 @@ const startApolloServer = async () => {
     });
   }
 
+  // Start the database and server
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
